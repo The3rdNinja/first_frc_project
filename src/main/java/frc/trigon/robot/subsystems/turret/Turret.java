@@ -24,8 +24,7 @@ public class Turret extends SubsystemBase {
     }
 
     /**
-     * Creates a new command that align the turret to the middle of the screen of the limelight.
-     *
+     * Creates a new command that aligns the turret to the reflector    .
      * @param reflectorPixelSupplier supplies the pixels of the reflector on the screen
      * @param hasTargetSupplier      supplies if the limelight sees the reflector
      * @return the command

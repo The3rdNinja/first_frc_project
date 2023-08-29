@@ -20,7 +20,7 @@ public class Collector extends SubsystemBase {
     }
 
     /**
-     * @return a command to collect
+     * @return a command that collects
      */
     public CommandBase getCollectCommand() {
         return new StartEndCommand(

@@ -20,7 +20,7 @@ public class Steer extends SubsystemBase {
     }
 
     /**
-     * Creates a new command that set the target angle.
+     * Creates a new command that sets the target angle from the supplier.
      * @param angleSupplier supplies the current angle
      * @return the command
      */
@@ -36,20 +36,20 @@ public class Steer extends SubsystemBase {
     }
 
     /**
-     * Creates a command that set the target angle.
-     * @param angle a paramter for the target angle.
+     * Creates a command that sets the target angle.
+     * @param targetAngle target angle
      * @return the command
      */
-    public CommandBase getSetTargetAngleCommand(double angle) {
+    public CommandBase getSetTargetAngleCommand(double targetAngle) {
         return new StartEndCommand(
-                () -> setTargetAngle(angle),
+                () -> setTargetAngle(targetAngle),
                 this::stop,
                 this
         );
     }
 
     /**
-     * @return a command that spin to angle 90, wait 3 seconds, then spin to angle 180, wait 3 seconds, spin to angle 0
+     * @return a command that turns to angle 90, waits 3 seconds, then turns to angle 180, waits 3 seconds, turns to angle 0
      */
     public CommandBase getAngleSequenceCommand() {
         return new SequentialCommandGroup(
