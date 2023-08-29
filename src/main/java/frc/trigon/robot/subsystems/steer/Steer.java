@@ -1,0 +1,73 @@
+package frc.trigon.robot.subsystems.steer;
+
+
+import com.ctre.phoenixpro.controls.PositionVoltage;
+import com.ctre.phoenixpro.hardware.TalonFX;
+import edu.wpi.first.wpilibj2.command.*;
+
+import java.util.function.Supplier;
+
+public class Steer extends SubsystemBase {
+    private final static Steer INSTANCE = new Steer();
+
+    private final TalonFX motor = SteerConstants.MOTOR;
+
+    public static Steer getInstance() {
+        return INSTANCE;
+    }
+
+    private Steer() {
+    }
+
+    /**
+     * Creates a new command that set the target angle.
+     * @param angleSupplier supplies the current angle
+     * @return the command
+     */
+    public CommandBase getSetTargetAngleCommand(Supplier<Double> angleSupplier) {
+        return new FunctionalCommand(
+                () -> {
+                },
+                () -> setTargetAngle(angleSupplier.get()),
+                (interrupted) -> stop(),
+                () -> false,
+                this
+        );
+    }
+
+    /**
+     * Creates a command that set the target angle.
+     * @param angle a paramter for the target angle.
+     * @return the command
+     */
+    public CommandBase getSetTargetAngleCommand(double angle) {
+        return new StartEndCommand(
+                () -> setTargetAngle(angle),
+                this::stop,
+                this
+        );
+    }
+
+    /**
+     * @return a command that spin to angle 90, wait 3 seconds, then spin to angle 180, wait 3 seconds, spin to angle 0
+     */
+    public CommandBase getAngleSequenceCommand() {
+        return new SequentialCommandGroup(
+                getSetTargetAngleCommand(90).withTimeout(3),
+                getSetTargetAngleCommand(180).withTimeout(3),
+                getSetTargetAngleCommand(0)
+        );
+    }
+
+    private void setTargetAngle(double angle) {
+        double systemRevolution = angle / 360;
+        double motorRevolution = systemRevolution * SteerConstants.GEAR_RATIO;
+        PositionVoltage request = new PositionVoltage(motorRevolution);
+        motor.setControl(request);
+    }
+
+    private void stop() {
+        motor.stopMotor();
+    }
+}
+
