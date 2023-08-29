@@ -31,7 +31,7 @@ public class Collector extends SubsystemBase {
     }
 
     /**
-     * @return a command to eject
+     * @return a command that ejects
      */
     public CommandBase getEjectCommand() {
         return new StartEndCommand(
