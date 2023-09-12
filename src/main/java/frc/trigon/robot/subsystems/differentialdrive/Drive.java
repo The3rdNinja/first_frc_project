@@ -29,8 +29,36 @@ public class Drive extends SubsystemBase {
         );
     }
 
+    public CommandBase arcadeDriveCommand(Supplier<Double> speedSupplier, Supplier<Double> rotationSupplier){
+        return new FunctionalCommand(
+                () -> {},
+                () -> arcadeDrive(speedSupplier.get(), rotationSupplier.get()),
+                (interrupted) -> stop(),
+                () -> false,
+                this
+        );
+    }
+
+    public CommandBase curvatureDriveCommand(Supplier<Double> speedSupplier, Supplier<Double> rotationSupplier, boolean enableRotation){
+        return new FunctionalCommand(
+                () -> {},
+                () -> curvatureDrive(speedSupplier.get(), rotationSupplier.get(), enableRotation  ),
+                (interrupted) -> stop(),
+                () -> false,
+                this
+        );
+    }
+
+    public void curvatureDrive(double speed, double rotation, boolean enableRotation) {
+        myDrive.curvatureDrive(speed, rotation, enableRotation);
+    }
+
     public void tankDrive(double left_power, double right_power){
         myDrive.tankDrive(left_power, right_power);
+    }
+
+    public void arcadeDrive(double speed, double rotation){
+        myDrive.arcadeDrive(speed, rotation);
     }
 
     private void stop() {
