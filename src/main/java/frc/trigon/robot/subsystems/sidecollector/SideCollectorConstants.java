@@ -32,7 +32,7 @@ public class SideCollectorConstants {
         lifterConfiguration.Audio.BeepOnBoot = false;
         lifterConfiguration.MotorOutput.Inverted = LIFTER_INVERTED_VALUE;
         lifterConfiguration.MotorOutput.NeutralMode = LIFTER_NEUTRAL_MODE_VALUE;
-        lifterConfiguration.Feedback.FeedbackRotorOffset = LIFTER_OFFSET;,
+        lifterConfiguration.Feedback.FeedbackRotorOffset = LIFTER_OFFSET;
 
         lifterConfiguration.Slot0.kP = P;
         lifterConfiguration.Slot0.kI = I;
@@ -45,5 +45,19 @@ public class SideCollectorConstants {
         collectorConfiguration.MotorOutput.Inverted = COLLECTOR_INVERTED_VALUE;
         collectorConfiguration.MotorOutput.NeutralMode = COLLECTOR_NEUTRAL_MODE_VALUE;
         COLLECTOR_MOTOR.getConfigurator().apply(collectorConfiguration);
+    }
+
+    public enum SideShooterStates {
+        COLLECTION(-1, 0),
+        HIGH(1, 40),
+        MIDDLE(1, 50);
+
+        public final double voltage;
+        public final double angle;
+
+        private SideShooterStates(double voltage, double angle) {
+            this.voltage = voltage;
+            this.angle = angle;
+        }
     }
 }
